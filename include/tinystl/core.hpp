@@ -12,7 +12,6 @@
 
 #ifdef __cpp_exceptions
 #define _TINYSTL_EXCEPTIONS
-#include <stdexcept>
 #endif
 
 #define _TINYSTL_CXX_23_BEGIN inline namespace _cxx_23 {
