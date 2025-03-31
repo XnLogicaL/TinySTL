@@ -15,12 +15,15 @@
 #include <stdexcept>
 #endif
 
+#define _TINYSTL_CXX_23_BEGIN inline namespace _cxx_23 {
+#define _TINYSTL_CXX_23_END   }
+
 #define _TINYSTL_BEGIN                                                                             \
   namespace tinystl {                                                                              \
-  inline namespace _cxx_23 {
+  _TINYSTL_CXX_23_BEGIN
 
 #define _TINYSTL_END                                                                               \
-  }                                                                                                \
+  _TINYSTL_CXX_23_END                                                                              \
   }
 
 #ifdef _MSC_VER
