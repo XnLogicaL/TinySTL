@@ -8,6 +8,7 @@
 #define _TINYSTL_HAS_ARRAY_HPP
 
 #include "internal/core.hpp"
+#include "exception.hpp"
 
 _TINYSTL_BEGIN
 
@@ -72,7 +73,7 @@ private:
 #ifdef _TINYSTL_EXCEPTIONS
     throw out_of_range("Array index out of range");
 #else
-    _tinystl_error("Array index out of range");
+    detail::_tinystl_error("Array index out of range");
 #endif
   }
 

@@ -41,32 +41,4 @@
 #pragma GCC diagnostic pop
 #endif
 
-_TINYSTL_BEGIN
-
-#ifdef _TINYSTL_EXCEPTIONS
-
-class exception {
-public:
-  constexpr explicit exception(const char* message)
-    : message(message) {}
-
-  virtual const char* what() const throw() {
-    return message;
-  }
-
-private:
-  const char* message;
-};
-
-#else
-#include <iostream>
-
-void _tinystl_error(const char* message) {
-  std::cerr << "TinySTL runtime error: " << message << std::flush;
-  std::terminate();
-}
-#endif
-
-_TINYSTL_END
-
 #endif

@@ -8,6 +8,7 @@
 #define _TINYSTL_HAS_STACK_HPP
 
 #include "internal/core.hpp"
+#include "exception.hpp"
 #include <cstddef>
 
 _TINYSTL_BEGIN
@@ -96,7 +97,7 @@ private:
 #ifdef _TINYSTL_EXCEPTIONS
     throw underflow_error("Stack underflow");
 #else
-    _tinystl_error("Stack underflow");
+    detail::_tinystl_error("Stack underflow");
 #endif
   }
 
@@ -105,7 +106,7 @@ private:
 #ifdef _TINYSTL_EXCEPTIONS
     throw overflow_error("Stack overflow");
 #else
-    _tinystl_error("Stack overflow");
+    detail::_tinystl_error("Stack overflow");
 #endif
   }
 

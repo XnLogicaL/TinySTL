@@ -8,6 +8,7 @@
 #define _TINYSTL_HAS_DYN_STACK_HPP
 
 #include "internal/core.hpp"
+#include "exception.hpp"
 #include "stack.hpp"
 #include <cstring>
 
@@ -118,7 +119,7 @@ private:
 #ifdef _TINYSTL_EXCEPTIONS
     throw underflow_error("Stack underflow");
 #else
-    _tinystl_error("Stack underflow");
+    detail::_tinystl_error("Stack underflow");
 #endif
   }
 
