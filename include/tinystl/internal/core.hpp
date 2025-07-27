@@ -26,12 +26,6 @@
   _TINYSTL_CXX_23_END                                                                              \
   }
 
-#ifdef _MSC_VER
-#define _TINYSTL_INLINE __forceinline
-#else
-#define _TINYSTL_INLINE inline
-#endif
-
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmultistatement-macros"
@@ -39,8 +33,8 @@
 
 // clang-format off
 #define _TINYSTL_ITERATOR_IMPL(begin_, end_)                                                 \
-  _TINYSTL_INLINE constexpr pointer begin() { return begin_; }                                       \
-  _TINYSTL_INLINE constexpr pointer end() { return end_; }
+  inline constexpr pointer begin() { return begin_; }                                       \
+  inline constexpr pointer end() { return end_; }
 // clang-format on
 
 #ifdef __GNUC__

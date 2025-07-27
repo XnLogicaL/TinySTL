@@ -70,12 +70,12 @@ public:
   _TINYSTL_ITERATOR_IMPL(m_stack_array, m_stack_array + m_capacity);
 
   // Returns the active size of the stack.
-  _TINYSTL_INLINE size_type size() const noexcept {
+  inline size_type size() const noexcept {
     return m_stack_pointer;
   }
 
   // Returns a reference to the top element.
-  _TINYSTL_INLINE reference top() {
+  inline reference top() {
     if (m_stack_pointer == 0) {
       m_underflow_error();
     }
@@ -83,7 +83,7 @@ public:
   }
 
   // Pops the top element and returns it.
-  _TINYSTL_INLINE value_type pop() {
+  inline value_type pop() {
     if (m_stack_pointer == 0) {
       m_underflow_error();
     }
@@ -91,7 +91,7 @@ public:
   }
 
   // Pushes an element onto the stack.
-  _TINYSTL_INLINE void push(rv_reference val) {
+  inline void push(rv_reference val) {
     if (m_stack_pointer == m_capacity) {
       m_resize();
     }
@@ -100,7 +100,7 @@ public:
 
 private:
   // Resizes the stack dynamically
-  _TINYSTL_INLINE void m_resize() {
+  inline void m_resize() {
     size_type new_capacity = (m_capacity == 0) ? 1 : m_capacity * 2;
     pointer new_array = new T[new_capacity];
 

@@ -57,12 +57,12 @@ public:
   _TINYSTL_ITERATOR_IMPL(m_stack_array, m_stack_array + Capacity);
 
   // Returns the active size of the stack.
-  _TINYSTL_INLINE size_type size() const noexcept {
+  inline size_type size() const noexcept {
     return m_stack_pointer;
   }
 
   // Returns a reference to the top element.
-  _TINYSTL_INLINE reference top() {
+  inline reference top() {
     if (!m_range_check(0)) {
       m_underflow_error();
     }
@@ -70,7 +70,7 @@ public:
   }
 
   // Pops the top element and returns it.
-  _TINYSTL_INLINE value_type pop() {
+  inline value_type pop() {
     if (!m_range_check(-1)) {
       m_underflow_error();
     }
@@ -78,7 +78,7 @@ public:
   }
 
   // Pushes an element onto the stack.
-  _TINYSTL_INLINE void push(T&& val) {
+  inline void push(T&& val) {
     if (!m_range_check(1)) {
       m_overflow_error();
     }
@@ -87,7 +87,7 @@ public:
 
 private:
   // Checks if an operation is within valid stack bounds.
-  _TINYSTL_INLINE bool m_range_check(int offset) const noexcept {
+  inline bool m_range_check(int offset) const noexcept {
     return (m_stack_pointer + offset <= Capacity) && (m_stack_pointer + offset >= 0);
   }
 
