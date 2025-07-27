@@ -7,31 +7,62 @@
 #ifndef _TINYSTL_HAS_STACK_HPP
 #define _TINYSTL_HAS_STACK_HPP
 
-#include "core.hpp"
-#include "stack-except.hpp"
+#include "internal/core.hpp"
+#include <cstddef>
 
 _TINYSTL_BEGIN
 
-#ifdef _TINYSTL_EXCEPTIONS
+class underflow_error : public exception {
+  using exception::exception;
+};
 
-#endif
+class overflow_error : public exception {
+  using exception::exception;
+};
 
 template<typename T, const size_t Capacity>
   requires std::is_copy_constructible_v<T> && std::is_trivially_move_assignable_v<T>
-#ifdef _TINYSTL_EXCEPTIONS // clang-format off
-    && std::is_nothrow_copy_constructible_v<T>
-#endif // clang-format on
 class stack final {
 public:
+  using size_type = size_t;
+  using value_type = T;
+  using reference = T&;
+  using rv_reference = T&&;
+  using pointer = T*;
+
   constexpr stack() = default;
 
+  // Copy constructor
+  constexpr stack(stack& other)
+    : m_stack_pointer(other.m_stack_pointer),
+      m_stack_array(other.m_stack_array) {}
+
+  // Move constructor
+  constexpr stack(stack&& other)
+    : m_stack_pointer(other.m_stack_pointer),
+      m_stack_array(other.m_stack_array) {
+    other.m_stack_pointer = 0;
+    other.m_stack_array = nullptr;
+  }
+
+  // Move assignement operator
+  constexpr stack& operator=(stack&& other) {
+    m_stack_pointer = other.m_stack_pointer;
+    m_stack_array = other.m_stack_array;
+    other.m_stack_pointer = 0;
+    other.m_stack_array = nullptr;
+  }
+
+  // Iterator compliance
+  _TINYSTL_ITERATOR_IMPL(m_stack_array, m_stack_array + Capacity);
+
   // Returns the active size of the stack.
-  _TINYSTL_INLINE size_t size() const noexcept {
+  _TINYSTL_INLINE size_type size() const noexcept {
     return m_stack_pointer;
   }
 
   // Returns a reference to the top element.
-  _TINYSTL_INLINE T& top() {
+  _TINYSTL_INLINE reference top() {
     if (!m_range_check(0)) {
       m_underflow_error();
     }
@@ -39,7 +70,7 @@ public:
   }
 
   // Pops the top element and returns it.
-  _TINYSTL_INLINE T pop() {
+  _TINYSTL_INLINE value_type pop() {
     if (!m_range_check(-1)) {
       m_underflow_error();
     }
@@ -79,8 +110,8 @@ private:
   }
 
 private:
-  size_t m_stack_pointer = 0;
-  T m_stack_array[Capacity];
+  size_type m_stack_pointer = 0;
+  value_type m_stack_array[Capacity];
 };
 
 _TINYSTL_END
