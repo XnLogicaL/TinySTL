@@ -1,0 +1,78 @@
+//
+// TinySTL
+// Copyright (C) 2025 XnLogicaL
+// Licensed under GNU GPL v3.0
+//
+
+#ifndef _TINYSTL_HAS_CORE_HPP
+#define _TINYSTL_HAS_CORE_HPP
+
+#include <type_traits>
+#include <utility>
+#include <cstddef>
+
+#ifdef __cpp_exceptions
+#define _TINYSTL_EXCEPTIONS
+#endif
+
+#define _TINYSTL_CXX_23_BEGIN inline namespace _cxx_23 {
+#define _TINYSTL_CXX_23_END   }
+
+#define _TINYSTL_BEGIN                                                                             \
+  namespace tiny {                                                                                 \
+  _TINYSTL_CXX_23_BEGIN
+
+#define _TINYSTL_END                                                                               \
+  _TINYSTL_CXX_23_END                                                                              \
+  }
+
+#ifdef _MSC_VER
+#define _TINYSTL_INLINE __forceinline
+#else
+#define _TINYSTL_INLINE inline
+#endif
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmultistatement-macros"
+#endif
+
+// clang-format off
+#define _TINYSTL_ITERATOR_IMPL(begin_, end_)                                                 \
+  _TINYSTL_INLINE constexpr pointer begin() { return begin_; }                                       \
+  _TINYSTL_INLINE constexpr pointer end() { return end_; }
+// clang-format on
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
+_TINYSTL_BEGIN
+
+#ifdef _TINYSTL_EXCEPTIONS
+
+class exception {
+public:
+  constexpr explicit exception(const char* message)
+    : message(message) {}
+
+  virtual const char* what() const throw() {
+    return message;
+  }
+
+private:
+  const char* message;
+};
+
+#else
+#include <iostream>
+
+void _tinystl_error(const char* message) {
+  std::cerr << "TinySTL runtime error: " << message << std::flush;
+  std::terminate();
+}
+#endif
+
+_TINYSTL_END
+
+#endif
