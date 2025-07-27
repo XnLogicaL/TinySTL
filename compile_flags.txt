@@ -1,4 +1,0 @@
--std=c++23
--xc++
--Wall
--Wextra
