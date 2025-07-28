@@ -33,43 +33,47 @@ public:
     return m_imag;
   }
 
+  inline auto operator-() const {
+    return complex(-m_real, -m_imag);
+  }
+
   template<typename U>
-  inline auto operator+(U x) {
+  inline auto operator+(U x) const {
     return complex(m_real + x, m_imag);
   }
 
   template<typename U>
-  inline auto operator+(complex<U> z) {
+  inline auto operator+(complex<U> z) const {
     return complex(m_real + z.m_real, m_imag + z.m_imag);
   }
 
   template<typename U>
-  inline auto operator-(U x) {
+  inline auto operator-(U x) const {
     return complex(m_real - x, m_imag);
   }
 
   template<typename U>
-  inline auto operator-(complex<U> z) {
+  inline auto operator-(complex<U> z) const {
     return complex(m_real - z.m_real, m_imag - z.m_imag);
   }
 
   template<typename U>
-  inline auto operator*(U x) {
+  inline auto operator*(U x) const {
     return complex(m_real * x, m_imag);
   }
 
   template<typename U>
-  inline auto operator*(complex<U> z) {
+  inline auto operator*(complex<U> z) const {
     return complex(m_real * z.m_real, m_imag * z.m_imag);
   }
 
   template<typename U>
-  inline auto operator/(U x) {
+  inline auto operator/(U x) const {
     return complex(m_real / x, m_imag);
   }
 
   template<typename U>
-  inline auto operator/(complex<U> z) {
+  inline auto operator/(complex<U> z) const {
     return complex(m_real / z.m_real, m_imag / z.m_imag);
   }
 
@@ -78,7 +82,8 @@ private:
   const value_type m_imag;
 };
 
-inline const complex<double> I{0.0, 1.0};
+template<typename T = double>
+inline constexpr complex<T> I{0.0, 1.0};
 
 _TINYSTL_END
 
