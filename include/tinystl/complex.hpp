@@ -8,7 +8,6 @@
 #define _TINYSTL_HAS_COMPLEX_HPP
 
 #include "internal/core.hpp"
-#include <complex.h>
 
 _TINYSTL_BEGIN
 
@@ -21,21 +20,65 @@ public:
 public:
   constexpr complex() = default;
   constexpr complex(value_type r, value_type i)
-    : m_base(r + i * I) {}
+    : m_real(r),
+      m_imag(i) {}
 
   // Returns the real component of the complex number.
   inline value_type real() const {
-    return creal(m_base);
+    return m_real;
   }
 
   // Returns the imaginary component of the complex number.
   inline value_type imag() const {
-    return cimag(m_base);
+    return m_imag;
+  }
+
+  template<typename U>
+  inline auto operator+(U x) {
+    return complex(m_real + x, m_imag);
+  }
+
+  template<typename U>
+  inline auto operator+(complex<U> z) {
+    return complex(m_real + z.m_real, m_imag + z.m_imag);
+  }
+
+  template<typename U>
+  inline auto operator-(U x) {
+    return complex(m_real - x, m_imag);
+  }
+
+  template<typename U>
+  inline auto operator-(complex<U> z) {
+    return complex(m_real - z.m_real, m_imag - z.m_imag);
+  }
+
+  template<typename U>
+  inline auto operator*(U x) {
+    return complex(m_real * x, m_imag);
+  }
+
+  template<typename U>
+  inline auto operator*(complex<U> z) {
+    return complex(m_real * z.m_real, m_imag * z.m_imag);
+  }
+
+  template<typename U>
+  inline auto operator/(U x) {
+    return complex(m_real / x, m_imag);
+  }
+
+  template<typename U>
+  inline auto operator/(complex<U> z) {
+    return complex(m_real / z.m_real, m_imag / z.m_imag);
   }
 
 private:
-  value_type ::complex m_base;
+  const value_type m_real;
+  const value_type m_imag;
 };
+
+inline const complex<double> I{0.0, 1.0};
 
 _TINYSTL_END
 
