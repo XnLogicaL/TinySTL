@@ -11,7 +11,7 @@
 
 _TINYSTL_BEGIN
 
-template<typename T>
+template<typename T = double>
   requires std::is_arithmetic_v<T>
 class complex final {
 public:
